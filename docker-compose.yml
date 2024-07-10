@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  web:
+    container_name: cer3_web
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/app/
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    
+  db:
+    container_name: cer3_db
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+     POSTGRES_USER: postgres
+     POSTGRES_DB: cer3
+     POSTGRES_PASSWORD: miau123.
+    
+  react:
+    container_name: cer3_react
+    build: 
+      context: C:\Users\PC\Desktop\cer3-ldp
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - ./react/:/app/
+    ports:
+    - "4400:3000"
+
+
+networks:
+  default:
+    name: cer3
+
+
+  
